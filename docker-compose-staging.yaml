@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+
+  redis:
+    image: "redis:alpine"
+    network_mode: host
+
+  redis-cli:
+    depends_on:
+      - redis
+    image: redis
+    network_mode: host
+    command: redis-cli -h 127.0.0.1 ping
+
+  easyfarm-api:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+        - .env
+    entrypoint: ['yarn', 'dev']
+    network_mode: host
+
+volumes:
+  pg_data:

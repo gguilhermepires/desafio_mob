@@ -1,0 +1,42 @@
+version: "3.9"
+services:
+
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: desafio
+      POSTGRES_PASSWORD: desafio
+      POSTGRES_USER: desafio
+    volumes:
+       - pg_data:/var/lib/postgresql/database
+    ports:
+      - "5434:5432"
+    
+  # migration:
+  #   build:
+  #     context: .
+  #     network: host
+  #     dockerfile: Dockerfile
+  #   command: bash -c "npm install && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
+  #   volumes:
+  #     - .:/code
+  #   depends_on:
+  #     - db
+  #   network_mode: host
+
+  # autenticacao-api:
+  #   restart: always
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #     network: host
+  #   env_file:
+  #       - .env
+  #   entrypoint: ['yarn', 'dev']
+  #   ports:
+  #     - "5000:5000"  
+  #   depends_on:
+  #     - db
+
+volumes:
+  pg_data:

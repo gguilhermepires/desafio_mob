@@ -1,0 +1,49 @@
+{
+  "compilerOptions": {
+      "target": "ES2017",
+      "module": "commonjs",
+      "lib": [
+          "ES6"
+      ],
+      "allowJs": true,
+      "checkJs": false,
+      "outDir": "./dist",
+      "rootDir": "./src",
+      "strict": true,
+      "noImplicitAny": true,
+      "strictNullChecks": true,
+      "strictFunctionTypes": true,
+      "strictBindCallApply": true,
+      "strictPropertyInitialization": false,
+      "noImplicitThis": true,
+      "alwaysStrict": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noImplicitReturns": true,
+      "noFallthroughCasesInSwitch": true,
+      "noUncheckedIndexedAccess": true,
+      "moduleResolution": "node",
+      "baseUrl": "./",
+      "paths": {
+        "@alias/*": [ "path/to/alias/*" ]
+      },
+      "typeRoots": [
+          "./node_modules/@types",
+          "./src/@types"
+      ],
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "resolveJsonModule": true,
+      "allowUnusedLabels": false,
+      "allowUnreachableCode": false,
+      "removeComments": true,
+  },
+  "include": [
+      "./src/**/*",
+      "./src/**/*.json"
+  ]
+}
