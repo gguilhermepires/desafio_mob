@@ -12,7 +12,6 @@ module.exports = {
       placa: {
         allowNull: false,
         type: Sequelize.STRING,
-        unique: true,
       },
       data_posicao: {
         allowNull: false,

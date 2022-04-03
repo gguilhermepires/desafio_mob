@@ -6,16 +6,50 @@ module.exports = {
 
 
   up: async (queryInterface) => {
-  
-    await queryInterface.bulkInsert('poi',
+    var data = new Date();
+    var data2 =data;
+
+    data2.setHours(data.getHours()+ 2);
+
+    await queryInterface.bulkInsert('posicao_veiculo',
       [
         {
           placa: 'placa1',
           data_posicao: new Date(),
           velocidade: 100,
           ignicao: true,
-          latitude:-20.33156704648558 ,
-          longitude:-40.27681084479051 ,
+          latitude:-20.332006238847846 ,
+          longitude:-40.27659368976977 ,
+          deletado:false,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          placa: 'placa1',
+          data_posicao: data2,
+          velocidade: 100,
+          ignicao: true,
+          latitude:-20.33166361866251 ,
+          longitude:-40.27724326533257 ,
+          deletado:false,
+          created_at: new Date(),
+          updated_at: new Date(),
+        },
+        {
+          placa: 'placa2',
+          data_posicao: new Date(),
+          velocidade: 100,
+          ignicao: true,
+          // latitude:-20.347069821887878 ,
+          // longitude:-40.28417067766542 ,
+          
+          
+          latitude:-20.33148840592836 ,
+          longitude:-40.2783095427234 ,
+          //fina carro = -20.33148840592836, -40.2783095427234
+          // 170 metros de dispacia para 
+          // origem -20.33102600300792, -40.276921227586776
+
           deletado:false,
           created_at: new Date(),
           updated_at: new Date(),

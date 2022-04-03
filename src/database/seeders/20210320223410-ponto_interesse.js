@@ -11,9 +11,9 @@ module.exports = {
       [
         {
           nome: 'POI 1',
-          raio: 100,
-          latitude:-20.33156704648558 ,
-          longitude:-40.27681084479051 ,
+          raio: 500,
+          latitude:-20.331011603798622 ,
+          longitude:-40.27695433466487 ,
           deletado:false,
           created_at: new Date(),
           updated_at: new Date(),
