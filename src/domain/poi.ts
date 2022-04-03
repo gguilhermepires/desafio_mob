@@ -42,16 +42,22 @@ const log = debug('desafio:domain:os:rdo');
 const Sequelize = require('sequelize');
 
 export class PoiDomain {
+  
+  logData(linha,data){
+    log(`linha ${linha} data: ${data.getDate()}/${data.getMonth()+1}/${data.getFullYear()}  ${data.getHours()}:${data.getMinutes()}:${data.getSeconds()}`);
+  }
 
   async buscaTabelaTempoPois(requestParams: any, requestQuery: any): Promise<RespostaServidor> {
     this._iniciaSequelize();
     const { empresaId } = requestParams;
-    let { q, limit, offset } = requestQuery;
+    let { placa, limit, offset, data } = requestQuery;
+    if (placa == undefined || placa == null)
+      placa = '';
+    
+    if (data == undefined || data == null){
+      data = '';
+    }
 
-    if (q == undefined)
-      q = '';
-    if (q == null)
-      q = '';
     if (limit == undefined && limit == null)
       limit = 30;
     if (offset == undefined && offset == null)
@@ -63,9 +69,6 @@ export class PoiDomain {
     let pois = await Poi.findAll({
       where: {
         deletado: false,
-        [Sequelize.Op.or]: [
-          { nome: { [Sequelize.Op.like]: `%${q}%` } },
-        ]
       },
       attributes: ['id', 'nome', 'latitude', 'longitude', 'raio'],
       limit: limit,
@@ -74,15 +77,36 @@ export class PoiDomain {
         ['id', 'DESC']
       ]
     });
+    // let startDate =  '2000-04-03T16:20:28.683Z';
+    // let endDate =  '2024-05-03T16:20:28.683Z';
+    //"2022-04-03T18:20:28.683Z",
+    //"2022-04-03T16:20:28.683Z"
+
+    let where = {
+      ignicao: true,
+      deletado: false,
+      [Sequelize.Op.or]: [
+        { placa: { [Sequelize.Op.like]: `%${placa}%` } },
+      ]
+    };
+
+    if(data != ''){
+      log(`linha 92`)
+      let dataInicio = new Date(`${data}`);
+      dataInicio.setHours(dataInicio.getHours()+24);
+      dataInicio.setHours(0);
+      let dataFim = new Date(`${data}`);
+      dataFim.setHours(dataFim.getHours()+26);
+      where = {
+        ...where,
+        data_posicao: {
+             [Sequelize.Op.between]: [dataInicio,dataFim]
+         },
+      }
+    }
 
     let posVeiculos = await PosicaoVeiculo.findAll({
-      where: {
-        ignicao: true,
-        deletado: false,
-        [Sequelize.Op.or]: [
-          { placa: { [Sequelize.Op.like]: `%${q}%` } },
-        ]
-      },
+      where: where,
       // attributes: ['id', 'placa', 'latitude', 'longitude'],
       limit: limit,
       offset: offset,
@@ -100,6 +124,7 @@ export class PoiDomain {
           tempo[resposta[i]?.veiculos[j].veiculo.placa] == null
         ) {
           tempo[resposta[i]?.veiculos[j].veiculo.placa] = {
+            placa: resposta[i]?.veiculos[j].veiculo.placa,
             ultima_data: resposta[i]?.veiculos[j].veiculo.data_posicao,
             datas: [resposta[i]?.veiculos[j].veiculo.data_posicao],
             tempo: {
@@ -121,6 +146,7 @@ export class PoiDomain {
           let datas = tempo[resposta[i]?.veiculos[j].veiculo.placa].datas;
           datas.push(resposta[i]?.veiculos[j].veiculo.data_posicao);
           tempo[resposta[i]?.veiculos[j].veiculo.placa] = {
+            placa: resposta[i]?.veiculos[j].veiculo.placa,
             ultima_data: resposta[i]?.veiculos[j].veiculo.data_posicao,
             datas: datas,
             tempo: {
@@ -132,9 +158,13 @@ export class PoiDomain {
           };
         }//fim else
       }//j
+      resposta[i] = {
+        ponto: resposta[i].ponto,
+        tempoVeiculos: tempo
+      };
     }//i
 
-    return RespostaServidor.criar(200, '', tempo);
+    return RespostaServidor.criar(200, '', resposta);
   }
 
   buscaVeiculosDentroPonto(pois, posVeiculos) {
