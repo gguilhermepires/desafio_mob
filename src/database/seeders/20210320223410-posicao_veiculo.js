@@ -40,16 +40,8 @@ module.exports = {
           data_posicao: new Date(),
           velocidade: 100,
           ignicao: true,
-          // latitude:-20.347069821887878 ,
-          // longitude:-40.28417067766542 ,
-          
-          
           latitude:-20.33148840592836 ,
           longitude:-40.2783095427234 ,
-          //fina carro = -20.33148840592836, -40.2783095427234
-          // 170 metros de dispacia para 
-          // origem -20.33102600300792, -40.276921227586776
-
           deletado:false,
           created_at: new Date(),
           updated_at: new Date(),

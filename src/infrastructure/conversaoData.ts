@@ -3,6 +3,26 @@ import debug from "debug";
 const log = debug('desafio:infrastrutura:conversordadta');
 import moment from 'moment';
 class ConversaoData {
+ 
+  static diferencaEntreDatas(date1: moment.Moment, date2: moment.Moment) {
+   return moment.duration(date1.diff(date2))
+  }
+
+  static converteDataBancoParaDataMoment(dataBanco:any){
+    return moment(dataBanco);
+  }
+
+  static converteDataParaDataBanco(data: any): any {
+    if (data == undefined || data == null){
+      return '';
+    }
+    return data;
+  }
+  
+  logData(linha:any,data:any){
+    log(`linha ${linha} data: ${data.getDate()}/${data.getMonth()+1}/${data.getFullYear()}  ${data.getHours()}:${data.getMinutes()}:${data.getSeconds()}`);
+  }
+
   static extraiSomenteDataDataBanco(stringData: string) {
     let hora = stringData.split('T')[0];
     return `${hora?.split('-')[2]}/${hora?.split('-')[1]}/${hora?.split('-')[0]}`; 

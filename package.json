@@ -11,11 +11,6 @@
     "copy-files": "copyfiles -u 1 src/**/*.ejs src/**/*.html src/**/*.css dist/",
     "build": "yarn clean && tsc && yarn copy-files",
     "teste": "NODE_ENV=test jest",
-    "testeOs": "NODE_ENV=test jest -t OS",
-    "testeRdo": "NODE_ENV=test jest -t RDO",
-    "testeRip": "NODE_ENV=test jest -t RIP",
-    "testeIns": "NODE_ENV=test jest -t INS",
-    "testeUsuario": "NODE_ENV=test jest -t Usuario",
     "test:watch": "cross-env DEBUG=desafio:* NODE_ENV=testing jest --watch --passWithNoTests",
     "lint": "eslint --fix ."
   },

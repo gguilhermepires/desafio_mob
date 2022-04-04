@@ -1,15 +1,10 @@
 require('dotenv').config();
 
 import debug from 'debug';
-import {app} from './app';
+import { app } from './app';
 
 const log = debug('desafio:server');
 const logError = debug('desafio:server:error');
-
-enum ExitStatus {
-  Failure = 1,
-  Success = 0,
-}
 
 process.on('unhandledRejection', (reason, promise) => {
   logError(
@@ -28,9 +23,9 @@ process.on('uncaughtException', (error) => {
   //process.exit(ExitStatus.Failure);
 });
 
-    const port = process.env.PORT || 5000;
+const port = process.env.PORT || 5000;
 
-    app.listen(port, ()=>{
-        log(`Server http started on port ${port} at ${new Date()}`);
-    });
+app.listen(port, () => {
+  log(`Server http started on port ${port} at ${new Date()}`);
+});
 
